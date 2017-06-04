@@ -1,0 +1,37 @@
+This scripts creates a graph detailing the difference in expressions of genes in two samples.
+The script uses the library expression_r_functions.R, the functions of which are detailed below. 
+
+
+expression script: get numeric table and graphical parameters, and plot the data from the table
+-graph_name: name of the output graph (a single string)
+-xaxis: name of the horizontal axis (a single string)
+-yaxis: name of the vertical axis (a single string)
+-size: size of the points in the plot (numeric)
+-color: color of the points in the plot (name of color)
+-reg: whether to plot a regression line ("y" or "n". default - "n")
+-xfile: the name (or path) of the file containing the data for the x axis (a single string)
+-yfile: the name (or path) of the file containing the data for the y axis (a single string)
+-legend: whether to add a legend to the plot ("y" or "n". default - "n")
+-names: if there's a legend, specify the names that appear in the legend (multiple strings, as many as needed)
+-selected: quadruplets of size color reg(y/n) file
+
+1. If there're no names provided and a legend is required:
+ a. The default name of the basic plot series (not the "selected" series) is "All Genes"
+ b. The default name of each series in the plot is the file name (in the selected quadruplet), without the whole path.
+2. The number of names provided should be the number of selected quadruplets + 1. That's because the legend containes the basic series and the series that match each selected quadruplet.
+
+
+
+getargs:
+Get the arguments for the script, returns them in a parsed list.
+Receives the arguments detailed above.
+
+generateTable:
+Load all countfiles of base and mutant into a table.
+
+cleanTableNoZeros:
+Remove zeroes from the table
+
+generatePlots:
+Plots the main data.
+Receives the full table and the list of arguments for the script.

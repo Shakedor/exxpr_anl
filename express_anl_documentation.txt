@@ -1,0 +1,45 @@
+This script helps with comparing the gene counts of selected genes in two sets of files, a set of base files, and a set of mutant files.
+The script uses the regulation_analysis_functions.R library, the functions of which are detailed below.
+
+
+analysis_main:
+Analyzes and compares the gene countfiles of base and mutant samples in specified selected genes.
+Creates statistics about the variations between base and mutant gene counts.
+Receives the following arguments:
+"-base [list]" a list of countfiles for base samples. 
+"-mutant [list]" a list of countfiles for mutant samples.
+"-selected [list]" a list of files containing the genes you wish to compare.
+"-disp [value]" a flag indicating which type of dispersion you require. Have value be "per-condition" for base dispersion, otherwise there will be only one variance table.
+"-pval [value]" a flag indicating what number is the cutoff point for significance to be used in the ttest. for example, 0.01 will only take those lines whose padj<0.01 for the ttest 
+"-out [file]" the name of the file you'd like the output to go to.
+The function analyzes and compiles statistics about the countfiles for the specified genes, printing the result into the output file.
+
+getagrs:
+Parses the arguments for the script.
+Expects to receive arguments in the form as listed above.
+Returns a list which is easier to work with.
+
+generateTable:
+Loads all countfiles of base and mutant into a table.
+Receives a list of base and mutant countfiles, returns a table containing the counts in both.
+Base gene counts will have a column name which begins with "base", mutant gene counts will begin with "mutant".
+
+generateCondition:
+Creates a condition vector.
+Receives the base and mutant file lists, returns a factor which consists of repeating "base" and "mutant" strings according to their corresponding list length.
+
+generateBinomResults:
+Normalize counts and calulate fault change and p value for each gene.
+Receives the arguments for the script, as they've been parsed by getagrs. Compiles statistics using binom tests.
+
+filterTable:
+Filters the count table to contain only the genes in the selected files.
+Receives the count table and a single selected file. Returns a new table, containing only genes which exist both in the original table and the given file.
+
+cleanTableFromNA_INF:
+Removes NA and INF symboles from the table.
+Receives the count table, and removes any invalid symbols.
+
+cleanTableFromP_Value:
+Removes lines with insignificant padj values.
+Receives the count table and a pval threshhold, and removes any lines that are less significant than said threshhold.
